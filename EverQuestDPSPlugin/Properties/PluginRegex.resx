@@ -147,12 +147,6 @@
   <data name="petAndPlayerName" xml:space="preserve">
     <value>(?&lt;playerName&gt;.+)`s\s(?&lt;petName&gt;(pet|familiar|ward|warder))</value>
   </data>
-  <data name="raidAllyFileName" xml:space="preserve">
-    <value>RaidRoster_(?&lt;serverName&gt;.+)-(?&lt;date&gt;[\d]+)-(?&lt;time&gt;[\d]+).txt</value>
-  </data>
-  <data name="raidAllyFormat" xml:space="preserve">
-    <value>(?&lt;groupId&gt;[\d]+)\s(?&lt;playerName&gt;\S+)\s(?&lt;playerLevel&gt;[\d]+)\s(?&lt;playerClass&gt;\S+)\s(?&lt;raidRole&gt;.+\b)</value>
-  </data>
   <data name="selfMatch" xml:space="preserve">
     <value>(You|you|yourself|Yourself|YOURSELF|YOU|your|YOUR)</value>
   </data>
@@ -168,9 +162,6 @@
   <data name="spellResist" xml:space="preserve">
     <value>(?&lt;victim&gt;.+) resisted (?&lt;attacker&gt;.+) (?&lt;spellName&gt;.+)\!(?:\s\((?&lt;special&gt;.+)\)){0,1}</value>
   </data>
-  <data name="tellsRegex" xml:space="preserve">
-    <value>(?&lt;CharacterName&gt;.+) (tells|told|say(|s)|said)</value>
-  </data>
   <data name="Unknown" xml:space="preserve">
     <value>(?&lt;Unknown&gt;(u|U)nknown)</value>
   </data>
@@ -178,7 +169,7 @@
     <value>You have entered ((?&lt;zoneName&gt;.*)|(?!((the Drunken Monkey stance adequately)|(an area where levitation effects do not function)|(an area where Bind Affinity is allowed)|(an Arena (PvP) area)))).</value>
   </data>
   <data name="attackTypes" xml:space="preserve">
-    <value>backstab|throw|pierce|gore|crush|slash|hit|kick|slam|bash|shoot|strike|bite|grab|punch|scratch|rake|swipe|claw|maul|smash|frenzies on|frenzy</value>
+    <value>backstab|throw|pierce|gore|crush|slash|hit|kick|slam|bash|shoot|strike|bite|grab|punch|scratch|rake|swipe|claw|maul|smash|frenzies on|frenzy|rend</value>
   </data>
   <data name="CripplingBlow" xml:space="preserve">
     <value>Crippling Blow</value>
@@ -246,9 +237,6 @@
   <data name="possesiveOf" xml:space="preserve">
     <value>possesiveOf</value>
   </data>
-  <data name="RaidRosterPath" xml:space="preserve">
-    <value>RaidRoster_*-*-*.txt</value>
-  </data>
   <data name="Riposte" xml:space="preserve">
     <value>Riposte</value>
   </data>
@@ -263,9 +251,6 @@
   </data>
   <data name="Strikethrough" xml:space="preserve">
     <value>Strikethrough</value>
-  </data>
-  <data name="Twincast" xml:space="preserve">
-    <value>Twincast</value>
   </data>
   <data name="ward" xml:space="preserve">
     <value>ward</value>
@@ -299,5 +284,8 @@
   </data>
   <data name="SkillAbility" xml:space="preserve">
     <value>Skill/Ability</value>
+  </data>
+  <data name="Twincast" xml:space="preserve">
+    <value>Twincast</value>
   </data>
 </root>

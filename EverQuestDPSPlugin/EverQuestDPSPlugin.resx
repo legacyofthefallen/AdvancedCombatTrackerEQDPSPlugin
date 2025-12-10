@@ -229,79 +229,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="selectDirectory.Location" type="System.Drawing.Point, System.Drawing">
-    <value>33, 232</value>
-  </data>
-  <data name="selectDirectory.Size" type="System.Drawing.Size, System.Drawing">
-    <value>189, 23</value>
-  </data>
-  <data name="selectDirectory.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="selectDirectory.Text" xml:space="preserve">
-    <value>Select EverQuest Directory</value>
-  </data>
-  <data name="&gt;&gt;selectDirectory.Name" xml:space="preserve">
-    <value>selectDirectory</value>
-  </data>
-  <data name="&gt;&gt;selectDirectory.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;selectDirectory.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;selectDirectory.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="eqDirectory.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="eqDirectory.Location" type="System.Drawing.Point, System.Drawing">
-    <value>28, 190</value>
-  </data>
-  <data name="eqDirectory.Size" type="System.Drawing.Size, System.Drawing">
-    <value>101, 13</value>
-  </data>
-  <data name="eqDirectory.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="eqDirectory.Text" xml:space="preserve">
-    <value>EverQuest Directory</value>
-  </data>
-  <data name="&gt;&gt;eqDirectory.Name" xml:space="preserve">
-    <value>eqDirectory</value>
-  </data>
-  <data name="&gt;&gt;eqDirectory.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;eqDirectory.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;eqDirectory.ZOrder" xml:space="preserve">
     <value>2</value>
-  </data>
-  <data name="directoryPathTB.Location" type="System.Drawing.Point, System.Drawing">
-    <value>33, 206</value>
-  </data>
-  <data name="directoryPathTB.Size" type="System.Drawing.Size, System.Drawing">
-    <value>366, 21</value>
-  </data>
-  <data name="directoryPathTB.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;directoryPathTB.Name" xml:space="preserve">
-    <value>directoryPathTB</value>
-  </data>
-  <data name="&gt;&gt;directoryPathTB.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;directoryPathTB.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;directoryPathTB.ZOrder" xml:space="preserve">
-    <value>4</value>
   </data>
   <data name="UpDownForPrecision.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -376,7 +304,7 @@
     <value>Calibri, 8.25pt</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>402, 258</value>
+    <value>381, 127</value>
   </data>
   <data name="&gt;&gt;watcherForRaidRoster.Name" xml:space="preserve">
     <value>watcherForRaidRoster</value>

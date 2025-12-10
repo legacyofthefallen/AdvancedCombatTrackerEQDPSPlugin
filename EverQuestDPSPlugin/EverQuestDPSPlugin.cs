@@ -38,8 +38,6 @@ namespace EverQuestDPS
             if (disposing)
             {
                 components?.Dispose();
-                //watcherForDebugFile?.Dispose();
-                watcherForRaidRoster?.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -57,15 +55,10 @@ namespace EverQuestDPS
             this.varianceOff = new System.Windows.Forms.RadioButton();
             this.sampVariance = new System.Windows.Forms.RadioButton();
             this.populVariance = new System.Windows.Forms.RadioButton();
-            this.selectDirectory = new System.Windows.Forms.Button();
-            this.eqDirectory = new System.Windows.Forms.Label();
-            this.directoryPathTB = new System.Windows.Forms.TextBox();
             this.UpDownForPrecision = new System.Windows.Forms.NumericUpDown();
             this.digitsForPrecision = new System.Windows.Forms.Label();
-            this.watcherForRaidRoster = new System.IO.FileSystemWatcher();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UpDownForPrecision)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.watcherForRaidRoster)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -107,29 +100,6 @@ namespace EverQuestDPS
             this.populVariance.MouseEnter += new System.EventHandler(this.OnMouseEnterPoplationVariance);
             this.populVariance.MouseLeave += new System.EventHandler(this.OnMouseLeaveButtonArea);
             // 
-            // selectDirectory
-            // 
-            resources.ApplyResources(this.selectDirectory, "selectDirectory");
-            this.selectDirectory.Name = "selectDirectory";
-            this.selectDirectory.UseVisualStyleBackColor = true;
-            this.selectDirectory.Click += new System.EventHandler(this.SelectDirectoryClick);
-            this.selectDirectory.MouseEnter += new System.EventHandler(this.OnMouseEnterButtonArea);
-            this.selectDirectory.MouseLeave += new System.EventHandler(this.OnMouseLeaveButtonArea);
-            // 
-            // eqDirectory
-            // 
-            resources.ApplyResources(this.eqDirectory, "eqDirectory");
-            this.eqDirectory.Name = "eqDirectory";
-            // 
-            // directoryPathTB
-            // 
-            resources.ApplyResources(this.directoryPathTB, "directoryPathTB");
-            this.directoryPathTB.Name = "directoryPathTB";
-            this.directoryPathTB.ReadOnly = true;
-            this.directoryPathTB.TextChanged += new System.EventHandler(this.DirectoryPathTxtBox_TextChanged);
-            this.directoryPathTB.MouseEnter += new System.EventHandler(this.OnMouseEnterDirectory);
-            this.directoryPathTB.MouseLeave += new System.EventHandler(this.OnMouseLeaveButtonArea);
-            // 
             // UpDownForPrecision
             // 
             resources.ApplyResources(this.UpDownForPrecision, "UpDownForPrecision");
@@ -146,12 +116,6 @@ namespace EverQuestDPS
             resources.ApplyResources(this.digitsForPrecision, "digitsForPrecision");
             this.digitsForPrecision.Name = "digitsForPrecision";
             // 
-            // watcherForRaidRoster
-            // 
-            this.watcherForRaidRoster.EnableRaisingEvents = true;
-            this.watcherForRaidRoster.SynchronizingObject = this;
-            this.watcherForRaidRoster.Created += new System.IO.FileSystemEventHandler(this.OnWatcherCreated);
-            // 
             // EQDPSParser
             // 
             resources.ApplyResources(this, "$this");
@@ -159,15 +123,11 @@ namespace EverQuestDPS
             this.BackColor = System.Drawing.SystemColors.Control;
             this.Controls.Add(this.digitsForPrecision);
             this.Controls.Add(this.UpDownForPrecision);
-            this.Controls.Add(this.eqDirectory);
-            this.Controls.Add(this.selectDirectory);
-            this.Controls.Add(this.directoryPathTB);
             this.Controls.Add(this.groupBox1);
             this.Name = "EQDPSParser";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.UpDownForPrecision)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.watcherForRaidRoster)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -193,9 +153,6 @@ namespace EverQuestDPS
         private RadioButton varianceOff;
         private RadioButton sampVariance;
         private RadioButton populVariance;
-        private TextBox directoryPathTB;
-        private Button selectDirectory;
-        private Label eqDirectory;
         #endregion
         //NumericUpDown nud;
         private MasterSwing chilled;
@@ -213,7 +170,6 @@ namespace EverQuestDPS
         };
         private NumericUpDown UpDownForPrecision;
         private Label digitsForPrecision;
-        String EverQuestDirectoryPath;
         long precisionForDPS;
         static Regex regexSelf = new Regex(@"(you|your|it|her|him|them)(s|sel(f|ves))", RegexOptions.Compiled);
         readonly object precisionObject = new object();
@@ -332,15 +288,15 @@ namespace EverQuestDPS
                 ActGlobals.oFormActMain.OnLogLineRead -= FormActMain_OnLogLineRead;
             };
 
-            void runDeInitActions()
+            Action runDeInitActions = () =>
             {
                 ActGlobals.oFormActMain.Invoke(removeOptionsFromMainForm);
                 ActGlobals.oFormActMain.Invoke(removeEventsFromFormMain);
-            }
+            };
 
             if (ActGlobals.oFormActMain.InvokeRequired)
             {
-                runDeInitActions();
+                ActGlobals.oFormActMain.Invoke(runDeInitActions);
             }
             else
             {
@@ -359,7 +315,6 @@ namespace EverQuestDPS
         {
             Action loadSettings = new Action(() =>
             {
-                xmlSettings.AddControlSetting(directoryPathTB.Name, directoryPathTB);
                 xmlSettings.AddControlSetting(populVariance.Name, populVariance);
                 xmlSettings.AddControlSetting(sampVariance.Name, sampVariance);
                 xmlSettings.AddControlSetting(varianceOff.Name, varianceOff);
@@ -395,11 +350,7 @@ namespace EverQuestDPS
                     else if (sampVariance.Checked)
                         StatisticalProcessors.Variance.varianceCalc = StatisticalProcessors.Variance.sampleVariance;
                     else
-                        StatisticalProcessors.Variance.varianceCalc = default;
-                    if (!Directory.Exists(directoryPathTB.Text))
-                    {
-                        MessageBox.Show($"directory path for EQ Game does not exist");
-                    }                   
+                        StatisticalProcessors.Variance.varianceCalc = default;                 
                 }
                 else
                 {
@@ -1566,11 +1517,11 @@ namespace EverQuestDPS
         private void CombatMasterSwingAdd(Match match, EQSwingType eqst, String specialMatchGroup, Dnum damage, String attackTypeMatchGroup, String typeOfResource, Action<Dictionary<string, object>> tagsAction)
         {
             DateTime dateTimeOfLogLine = ParseEQTimeStampFromLog(match.Groups[Properties.PluginRegex.dateTimeOfLogLine].Value);
-            Tuple<String, String> petTypeAndName = GetPetTypeAndPlayerName(ReplaceSelfWithCharacterName(match.Groups["attacker"].Value));
+            Tuple<String, String> attackerPetTypeAndName = GetPetTypeAndPlayerName(ReplaceSelfWithCharacterName(match.Groups["attacker"].Value));
             Tuple<String, String> victimPetTypeAndName = GetPetTypeAndPlayerName(match.Groups["victim"].Value);
             Dictionary<string, Object> tags = new Dictionary<string, Object>
                     {
-                        { Properties.PluginRegex.OutgoingTag, petTypeAndName.Item1 },
+                        { Properties.PluginRegex.OutgoingTag, attackerPetTypeAndName.Item1 },
                         { Properties.PluginRegex.IncomingTag, victimPetTypeAndName.Item1 }
                     };
             tags[Properties.PluginRegex.SpecialStringTag] = SpecialsParse(match.Groups["special"]);
@@ -1580,7 +1531,7 @@ namespace EverQuestDPS
             {
                 bool critical = match.Groups[specialMatchGroup].Value.Contains(Properties.PluginRegex.Critical);
                 String healName = match.Groups[attackTypeMatchGroup].Success ? match.Groups[attackTypeMatchGroup].Value : "unnamed heal";
-                String attacker = ReplaceSelfWithCharacterName(petTypeAndName.Item2);
+                String attacker = ReplaceSelfWithCharacterName(attackerPetTypeAndName.Item2);
                     AddMasterSwing(
                     eqst
                     , critical
@@ -1589,12 +1540,12 @@ namespace EverQuestDPS
                     , dateTimeOfLogLine
                     , attacker
                     , typeOfResource
-                    , CheckIfSelf(victimPetTypeAndName.Item2) ? petTypeAndName.Item2 : ReplaceSelfWithCharacterName(victimPetTypeAndName.Item2)
+                    , CheckIfSelf(victimPetTypeAndName.Item2) ? attackerPetTypeAndName.Item2 : ReplaceSelfWithCharacterName(victimPetTypeAndName.Item2)
                     , tags);
             }
             else
             {
-                if (ActGlobals.oFormActMain.SetEncounter(ActGlobals.oFormActMain.LastKnownTime, ReplaceSelfWithCharacterName(petTypeAndName.Item2), ReplaceSelfWithCharacterName(victimPetTypeAndName.Item2)))
+                if (ActGlobals.oFormActMain.SetEncounter(ActGlobals.oFormActMain.LastKnownTime, ReplaceSelfWithCharacterName(attackerPetTypeAndName.Item2), ReplaceSelfWithCharacterName(victimPetTypeAndName.Item2)))
                 {
                     AddMasterSwing(
                      eqst
@@ -1602,7 +1553,7 @@ namespace EverQuestDPS
                     , damage
                     , match.Groups[attackTypeMatchGroup].Value
                     , dateTimeOfLogLine
-                    , ReplaceSelfWithCharacterName(petTypeAndName.Item2)
+                    , ReplaceSelfWithCharacterName(attackerPetTypeAndName.Item2)
                     , typeOfResource
                     , ReplaceSelfWithCharacterName(victimPetTypeAndName.Item2)
                     , tags);
@@ -1696,47 +1647,9 @@ namespace EverQuestDPS
         /// <returns></returns>
         private string ReplaceSelfWithCharacterName(string PersonaString)
         {
-            return selfCheck.Match(PersonaString).Success ? ActGlobals.charName : PersonaString;
-        }
-        #endregion
-
-        #region File System Watcher
-
-        private FileSystemWatcher watcherForRaidRoster;
-        private void DirectoryPathTxtBox_TextChanged(object sender, EventArgs e)
-        {
-            if (Directory.Exists(directoryPathTB.Text))
-            {
-                SetWatcherToDirectory();
-                ChangePluginStatusLabel($"EverQuest install directory changed to {directoryPathTB.Text}");
-
-            }
-            else
-            {
-                ChangePluginStatusLabel("EverQuest install directory is missing from plugin settings.");
-            }
-        }
-
-        /// <summary>
-        /// Once a file is created read the lines from the roster and include them on the Raid Allies list for the encounter
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-
-        private void SetWatcherToDirectory()
-        {
-            if (Directory.Exists(EverQuestDirectoryPath))
-            {
-                watcherForRaidRoster.Path = Path.GetFullPath(EverQuestDirectoryPath);
-                watcherForRaidRoster.Filter = Properties.PluginRegex.RaidRosterPath;
-                watcherForRaidRoster.IncludeSubdirectories = false;
-                watcherForRaidRoster.NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastWrite | NotifyFilters.Attributes | NotifyFilters.CreationTime;
-            }
-            else
-            {
-                //watcherForDebugFile.Dispose();
-                watcherForRaidRoster?.Dispose();
-            }
+            bool personaMatch = selfCheck.Match(PersonaString).Success;
+            string personaReturn = personaMatch ? ActGlobals.charName : PersonaString;
+            return personaReturn;
         }
         #endregion
 
@@ -1752,19 +1665,9 @@ namespace EverQuestDPS
             ChangeSetOptionsHelpText("Whether variance is calculated and if so if it is sample or population variance.");
         }
 
-        private void OnMouseEnterButtonArea(object sender, EventArgs e)
-        {
-            ChangeSetOptionsHelpText("Click to select EverQuest directory");
-        }
-
         private void OnMouseLeaveButtonArea(object sender, EventArgs e)
         {
             ChangeSetOptionsHelpText(Properties.PluginRegex.MouseLeave);
-        }
-
-        private void OnMouseEnterDirectory(object sender, EventArgs e)
-        {
-            ChangeSetOptionsHelpText($"EverQuest directory path currently set");
         }
 
         private void OnMouseEnterPoplationVariance(object sender, EventArgs e)
@@ -1796,76 +1699,14 @@ namespace EverQuestDPS
             }
         }
 
-        private void OnWatcherCreated(object sender, FileSystemEventArgs e)
-        {
-            if (ActGlobals.oFormActMain.ActiveZone.ActiveEncounter == null)
-            {
-                ChangePluginStatusLabel("No active encounter and no raid allies will be tracked.");
-                return;
-            }
-            ChangePluginStatusLabel($"Reading {e.FullPath}");
-            Regex raidAllyLineRegex = new Regex(Properties.PluginRegex.raidAllyFormat);
-            Regex filename = new Regex(Properties.PluginRegex.raidAllyFileName);
-            Match m = filename.Match(e.Name);
-            if (e.ChangeType.HasFlag(WatcherChangeTypes.Created) && m.Success)
-            {
-                List<CombatantData> data = new List<CombatantData>();
-
-                using (StreamReader sr = new StreamReader(new FileStream(e.FullPath, FileMode.Open)))
-                {
-                    String line;
-
-                    while ((line = sr.ReadLine()) != null)
-                    {
-                        Match raidLineMatch = raidAllyLineRegex.Match(line);
-                        CombatantData combatantData = new CombatantData(raidLineMatch.Groups["playerName"].Value, ActGlobals.oFormActMain.ActiveZone.ActiveEncounter);
-
-                        if (combatantData != null && combatantData.Name != ActGlobals.charName)
-                            data.Add(combatantData);
-                    }
-                }
-
-                ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.SetAllies(data);
-            }
-        }
-
         #endregion
-        private void SelectDirectoryClick(object sender, EventArgs e)
-        {
-            using (var EverQuestInstallPath = new FolderBrowserDialog())
-            {
-                DialogResult dr = EverQuestInstallPath.ShowDialog();
-
-                if (dr == DialogResult.OK)
-                {
-                    EverQuestDirectoryPath = EverQuestInstallPath.SelectedPath;
-                    if (Directory.Exists(EverQuestDirectoryPath))
-                    {
-                        ChangeDirectoryPathAfterDialog(EverQuestInstallPath.SelectedPath);
-                        SetWatcherToDirectory();
-                        SaveSettings();
-                    }
-                    else
-                        throw new DirectoryNotFoundException($"{EverQuestDirectoryPath} does not exist.");
-                }
-                else
-                {
-                    MessageBox.Show($"Dialog result was not an OK message.", "Result was not ok directory path was not changed by Dialog.", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-        }
-
-        private void ChangeDirectoryPathAfterDialog(String status)
-        {
-            ChangeTextInControl(directoryPathTB, status);
-        }
 
         private void ChangeTextInControl(Control control, String text)
         {
             switch (control.InvokeRequired)
             {
                 case true:
-                    this.directoryPathTB.Invoke(new Action(() =>
+                    control.Invoke(new Action(() =>
                     {
                         control.Text = text;
                     }));
@@ -1877,11 +1718,6 @@ namespace EverQuestDPS
                     break;
             }
         }
-
-        /// <summary>
-        /// updates the status label with thread safety based on whether the plugin needs to invoke the codes in separate thread to update the user interface control
-        /// </summary>
-        /// <param name="status"></param>
         private void ChangePluginStatusLabel(String status)
         {
             ChangeTextInControl(lblStatus, status);

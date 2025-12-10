@@ -61,7 +61,7 @@ namespace EverQuestDPS.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to backstab|throw|pierce|gore|crush|slash|hit|kick|slam|bash|shoot|strike|bite|grab|punch|scratch|rake|swipe|claw|maul|smash|frenzies on|frenzy.
+        ///   Looks up a localized string similar to backstab|throw|pierce|gore|crush|slash|hit|kick|slam|bash|shoot|strike|bite|grab|punch|scratch|rake|swipe|claw|maul|smash|frenzies on|frenzy|rend.
         /// </summary>
         internal static string attackTypes {
             get {
@@ -421,33 +421,6 @@ namespace EverQuestDPS.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to RaidRoster_(?&lt;serverName&gt;.+)-(?&lt;date&gt;[\d]+)-(?&lt;time&gt;[\d]+).txt.
-        /// </summary>
-        internal static string raidAllyFileName {
-            get {
-                return ResourceManager.GetString("raidAllyFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to (?&lt;groupId&gt;[\d]+)\s(?&lt;playerName&gt;\S+)\s(?&lt;playerLevel&gt;[\d]+)\s(?&lt;playerClass&gt;\S+)\s(?&lt;raidRole&gt;.+\b).
-        /// </summary>
-        internal static string raidAllyFormat {
-            get {
-                return ResourceManager.GetString("raidAllyFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to RaidRoster_*-*-*.txt.
-        /// </summary>
-        internal static string RaidRosterPath {
-            get {
-                return ResourceManager.GetString("RaidRosterPath", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Riposte.
         /// </summary>
         internal static string Riposte {
@@ -543,15 +516,6 @@ namespace EverQuestDPS.Properties {
         internal static string Strikethrough {
             get {
                 return ResourceManager.GetString("Strikethrough", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to (?&lt;CharacterName&gt;.+) (tells|told|say(|s)|said).
-        /// </summary>
-        internal static string tellsRegex {
-            get {
-                return ResourceManager.GetString("tellsRegex", resourceCulture);
             }
         }
         
